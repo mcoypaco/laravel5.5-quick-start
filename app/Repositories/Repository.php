@@ -2,33 +2,52 @@
 
 namespace App\Repositories;
 
-use Illuminate\Http\Request;
+use App\Repositories\Contracts\Resource; 
+use App\Repositories\Support\Resourceful; 
 
-use App\Repositories\Support\Search;
-
-class Repository 
+class Repository implements Resource
 {
-    protected $limit = 10;
+    use Resourceful;
 
-    protected $search;
-
-    public function __construct(Search $search)
+    /**
+     * Number of items per paging.
+     * 
+     * @return integer
+     */
+    public function itemsPerPage()
     {
-        $this->search = $search;
+        return isset($this->limit) ? $this->limit : 10;
     }
 
     /**
-     * Search for a specific user in the database.
+     * Get the path for the Eloquent model.
      * 
-     * @param Illuminate\Http\Request $request
-     * @return \App\Http\Resources\UserCollection
+     * @return string
      */
-    public function search(Request $request)
+    public function model()
     {
-        $users = $this->search->matches($this->model(), $this->findBy())->paginate($this->limit);
+        return $this->modelPath;
+    }
 
-        $collection = $this->collection();
+    /**
+     * Create a resource instance for the Eloquent model.
+     * 
+     * @param mixed $model
+     * @return \Illuminate\Http\Resources\Json\Resource
+     */
+    public function resource($model)
+    {
+        return new $this->resourcePath($model);
+    }
 
-        return new $collection($users);
+    /**
+     * Create a resource collection instance for the Eloquent model.
+     * 
+     * @param mixed $model
+     * @return \Illuminate\Http\Resources\Json\ResourceCollection
+     */
+    public function resourceCollection($model)
+    {
+        return new $this->resourceCollectionPath($model);
     }
 }

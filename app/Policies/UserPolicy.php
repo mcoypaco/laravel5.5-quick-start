@@ -27,12 +27,12 @@ class UserPolicy
      * Determine whether the user can view the user.
      *
      * @param  \App\User  $user
-     * @param  \App\User  $user
+     * @param  \App\User  $newUser
      * @return mixed
      */
     public function view(User $user, User $newUser)
     {
-        //
+        return true;
     }
 
     /**
@@ -43,30 +43,30 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
      * Determine whether the user can update the user.
      *
      * @param  \App\User  $user
-     * @param  \App\User  $user
+     * @param  \App\User  $newUser
      * @return mixed
      */
     public function update(User $user, User $newUser)
     {
-        //
+        return true;
     }
 
     /**
      * Determine whether the user can delete the user.
      *
      * @param  \App\User  $user
-     * @param  \App\User  $user
+     * @param  \App\User  $newUser
      * @return mixed
      */
     public function delete(User $user, User $newUser)
     {
-        //
+        return true;
     }
 }

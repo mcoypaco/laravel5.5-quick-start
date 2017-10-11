@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Repositories\UserRepository;
-use App\Http\Requests\User\Store as StoreUser;
+use App\Http\Requests\User\{Store as StoreUser, Update as UpdateUser};
 
 class UserController extends Controller
 {
@@ -13,7 +13,7 @@ class UserController extends Controller
 
     public function __construct(UserRepository $users) 
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->except('search');
 
         $this->users = $users;
     }
@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return $this->users()->paginate(10);
     }
 
     /**
@@ -47,7 +47,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $this->authorize('view', $user);
+
+        return $this->users->find($user);
     }
 
     /**
@@ -57,9 +59,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUser $request, User $user)
     {
-        //
+        return $this->users->fill($request, $user);
     }
 
     /**
@@ -68,9 +70,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $this->authorize('delete', $user);
+
+        return $this->users->delete($user);
     }
 
     /**
