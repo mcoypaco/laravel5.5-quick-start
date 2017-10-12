@@ -2,12 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Repositories\Contracts\CanSearch;
-use App\Repositories\Support\Searchable;
+use App\Repositories\Contracts\{ CanSearch, MustBeUnique };
+use App\Repositories\Support\{ Searchable, Unique};
 
-class UserRepository extends Repository implements CanSearch
+class UserRepository extends Repository implements CanSearch, MustBeUnique
 {
-    use Searchable;
+    use Searchable, Unique;
 
     /**
      * Path for the Eloquent model.
@@ -36,6 +36,16 @@ class UserRepository extends Repository implements CanSearch
      * @return array
      */
     public function findBy()
+    {
+        return ['email'];
+    }
+    
+    /**
+     * Columns that should be unique in the storage.
+     * 
+     * @return array
+     */
+    public function uniqueBy()
     {
         return ['email'];
     }

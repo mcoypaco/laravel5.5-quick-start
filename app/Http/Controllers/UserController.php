@@ -13,7 +13,7 @@ class UserController extends Controller
 
     public function __construct(UserRepository $users) 
     {
-        $this->middleware('auth:api')->except('search');
+        $this->middleware('auth:api')->except('checkDuplicate');
 
         $this->users = $users;
     }
@@ -89,6 +89,17 @@ class UserController extends Controller
     }
 
     /**
+     * Check in the specified resource exists in the storage.
+     * 
+     * @param \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkDuplicate(Request $request)
+    {
+        return $this->users->checkDuplicate($request);
+    }
+
+    /**
      * Search for the specified resource from storage.
      * 
      * @param \Illuminate\Http\Request  $request
@@ -98,4 +109,5 @@ class UserController extends Controller
     {
         return $this->users->search($request);
     }
+    
 }
