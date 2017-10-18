@@ -2,8 +2,11 @@
 
 namespace App\Repositories;
 
+use Illuminate\Http\Request;
+
 use App\Repositories\Contracts\{ CanSearch, MustBeUnique };
 use App\Repositories\Support\{ Searchable, Unique};
+use App\User;
 
 class UserRepository extends Repository implements CanSearch, MustBeUnique
 {
@@ -48,5 +51,22 @@ class UserRepository extends Repository implements CanSearch, MustBeUnique
     public function uniqueBy()
     {
         return ['email'];
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Resources\Json\Resource
+     */
+    public function create(Request $request)
+    {
+        $user =  User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password)
+        ]);
+
+        return $this->resource($user);
     }
 }

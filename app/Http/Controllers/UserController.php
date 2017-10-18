@@ -13,7 +13,9 @@ class UserController extends Controller
 
     public function __construct(UserRepository $users) 
     {
-        $this->middleware('auth:api')->except('checkDuplicate');
+        $this->middleware('auth:api')->except(['checkDuplicate', 'store']);
+
+        $this->middleware('client')->only(['checkDuplicate', 'store']);
 
         $this->users = $users;
     }

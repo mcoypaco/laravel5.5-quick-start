@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'user'], function () {
     Route::post('auth', 'UserController@auth');
     Route::post('search', 'UserController@search');
-    Route::post('check-duplicate', 'UserController@checkDuplicate')->middleware('client');
+    Route::post('check-duplicate', 'UserController@checkDuplicate');
 });
 
 Route::apiResource('user', 'UserController');
