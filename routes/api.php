@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('password/reset', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('password/reset/{token}', 'Auth\ResetsPasswordsController@reset');
+
 Route::group(['prefix' => 'user'], function () {
     Route::post('auth', 'UserController@auth');
     Route::post('search', 'UserController@search');
