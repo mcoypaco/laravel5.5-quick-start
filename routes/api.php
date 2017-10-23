@@ -12,9 +12,12 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('error-report', 'ErrorReportController@send');
 
-Route::post('password/reset', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-Route::post('password/reset/{token}', 'Auth\ResetPasswordController@reset');
+Route::group(['prefix' => 'password'], function() {
+    Route::post('reset', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+    Route::post('reset/{token}', 'Auth\ResetPasswordController@reset');
+});
 
 Route::group(['prefix' => 'user'], function () {
     Route::post('auth', 'UserController@auth');
