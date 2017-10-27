@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 Route::post('error-report', 'ErrorReportController@send');
+Route::post('logout', 'Auth\LogoutController@logout');
 
 Route::group(['prefix' => 'password'], function() {
     Route::post('reset', 'Auth\ForgotPasswordController@sendResetLinkEmail');
