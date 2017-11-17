@@ -61,12 +61,23 @@ class UserRepository extends Repository implements CanSearch, MustBeUnique
      */
     public function create(Request $request)
     {
-        $user =  User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
 
+        return $this->resource($user);
+    }
+
+    /**
+     * Show the autheticated user's details in a resource form.
+     * 
+     * @param \App\User $user
+     * @return \Illuminate\Http\Resources\Json\Resource
+     */
+    public function authenticated(User $user)
+    {
         return $this->resource($user);
     }
 }

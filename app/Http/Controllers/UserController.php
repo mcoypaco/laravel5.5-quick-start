@@ -87,7 +87,7 @@ class UserController extends Controller
      */
     public function auth(Request $request) 
     {
-        return $request->user();
+        return $this->users->authenticated($request->user());
     }
 
     /**
@@ -111,5 +111,4 @@ class UserController extends Controller
     {
         return $this->users->search($request);
     }
-    
 }
