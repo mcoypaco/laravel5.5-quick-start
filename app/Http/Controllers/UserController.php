@@ -102,6 +102,16 @@ class UserController extends Controller
     }
 
     /**
+     * Check if password matches authenticated user's password.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function checkPassword(Request $request) 
+    {
+        return $this->users->checkPassword($request);
+    }
+
+    /**
      * Search for the specified resource from storage.
      * 
      * @param \Illuminate\Http\Request  $request

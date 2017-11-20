@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Http\Request;
+use Hash;
 
 use App\Repositories\Contracts\{ CanSearch, MustBeUnique };
 use App\Repositories\Support\{ Searchable, Unique};
@@ -79,5 +80,15 @@ class UserRepository extends Repository implements CanSearch, MustBeUnique
     public function authenticated(User $user)
     {
         return $this->resource($user);
+    }
+
+    /**
+     * Check if password matches authenticated user's password.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function checkPassword(Request $request) 
+    {
+        return response()->json(Hash::check($request->password, $request->user()->password));
     }
 }
