@@ -91,4 +91,21 @@ class UserRepository extends Repository implements CanSearch, MustBeUnique
     {
         return response()->json(Hash::check($request->password, $request->user()->password));
     }
+
+    /**
+     * Change authenticated user's password.
+     * 
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function changePassword(Request $request)
+    {
+        $user = $request->user();
+
+        $user->password = bcrypt($request->password);
+
+        $user->save();
+
+        return response()->json(true);
+    }
 }

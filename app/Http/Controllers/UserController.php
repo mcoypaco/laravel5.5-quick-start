@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Repositories\UserRepository;
-use App\Http\Requests\User\{Store as StoreUser, Update as UpdateUser};
+use App\Http\Requests\User\{ChangePassword, Store as StoreUser, Update as UpdateUser};
 
 class UserController extends Controller
 {
@@ -88,6 +88,17 @@ class UserController extends Controller
     public function auth(Request $request) 
     {
         return $this->users->authenticated($request->user());
+    }
+
+    /**
+     * Change user's password.
+     * 
+     * @param \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function changePassword(ChangePassword $request)
+    {
+        return $this->users->changePassword($request);
     }
 
     /**

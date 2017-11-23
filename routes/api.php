@@ -25,6 +25,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('search', 'UserController@search');
     Route::post('check-duplicate', 'UserController@checkDuplicate');
     Route::post('check-password', 'UserController@checkPassword');
+    Route::post('change-password', 'UserController@changePassword');
 });
 
 Route::apiResource('user', 'UserController');
